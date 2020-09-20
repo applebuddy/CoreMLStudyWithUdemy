@@ -47,6 +47,25 @@ extension ViewController {
             }
         }
     }
+    
+    private func visualizeObservations(_ observations: [VNDetectedObjectObservation]) {
+        DispatchQueue.main.async {
+            // - 감지된 observations가 올바른 데이터인지 확인한다.
+            guard let image = self.imageView.image else {
+                print("Filaed to retrieve image")
+                return
+            }
+            
+            let imageSize = image.size
+            
+            // - Quartz 2D ~ UIKit 간 좌표계 시스템이 다르기 때문에 이미지를 뒤집어서 위치 조정이 필요하다.
+            // 1. 위로 뒤집고, 기존 위치로 위치를 내린다.
+            var transform = CGAffineTransform.identity.scaledBy(x: 1, y: -1).translatedBy(x: 0, y: -imageSize.height)
+            // 2. 이후 UIKit 좌표계에 맞게 이미지 사이즈를 조절해준다.
+            transform = transform.scaledBy(x: imageSize.width, y: imageSize.height)
+            
+        }
+    }
 }
 
 
