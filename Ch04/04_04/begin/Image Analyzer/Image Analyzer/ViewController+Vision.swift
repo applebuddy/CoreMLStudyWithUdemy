@@ -24,8 +24,16 @@ extension ViewController {
                     return
                 }
                 print(observations)
+                // setting observation's rectangles visualizations in image
+                self.visualizeObservations(observations)
             }
         }
+        
+        // - request settings
+        request.maximumObservations = 0
+        request.minimumConfidence = 0.5
+        request.minimumAspectRatio = 0.4
+        
         return request
     }
     
@@ -64,6 +72,29 @@ extension ViewController {
             // 2. 이후 UIKit 좌표계에 맞게 이미지 사이즈를 조절해준다.
             transform = transform.scaledBy(x: imageSize.width, y: imageSize.height)
             
+            // - 감지한 Rectangles에 대한 표시를 적용하기 위한 처리과정
+            UIGraphicsBeginImageContextWithOptions(imageSize, true, 0.0)
+            let context = UIGraphicsGetCurrentContext()
+            image.draw(in: CGRect(origin: .zero, size: imageSize))
+            
+            context?.saveGState()
+            context?.setLineWidth(8.0)
+            context?.setStrokeColor(UIColor.red.cgColor)
+            context?.setFillColor(red: 1, green: 0, blue: 0, alpha: 0.3)
+            
+            observations.forEach { observation in
+                let observationsBounds = observation.boundingBox.applying(transform)
+                context?.addRect(observationsBounds)
+            }
+            
+            context?.drawPath(using: CGPathDrawingMode.fillStroke)
+            context?.restoreGState()
+            
+            let drawnImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            // - 감지한 Rectangles의 표시자를 포함한 이미지를 이미지뷰에 적용한다.
+            self.imageView.image = drawnImage
         }
     }
 }
