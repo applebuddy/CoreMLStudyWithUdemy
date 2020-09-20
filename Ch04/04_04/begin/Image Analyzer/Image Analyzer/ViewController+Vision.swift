@@ -11,9 +11,11 @@ import UIKit
 import Vision
 
 extension ViewController {
-    var detectionRequest: VNDetectRectanglesRequest {
+    var detectionRequest: VNDetectBarcodesRequest {
         // MARK: VNDetectRectanglesRequest 사용 예시
-        let request = VNDetectRectanglesRequest { (request, error) in
+        // - VNDetectRectanglesRequest(사각형 감지) 외에,
+        // VNDetectTextRectanglesRequest(텍스트 감지) / VNDetectFaceRectanglesRequest(얼굴 감지) / VNDetectBarcodesRequest 등 원하는 감지 타입을 입맛대로 선택해서 사용할 수 있다.
+        let request = VNDetectBarcodesRequest { (request, error) in
             // error가 존재한다면, 해당 에러를 출력한다.
             if let detectError = error as NSError? {
                 print(detectError)
@@ -29,10 +31,13 @@ extension ViewController {
             }
         }
         
-        // - request settings
-        request.maximumObservations = 0
-        request.minimumConfidence = 0.5
-        request.minimumAspectRatio = 0.4
+        // - request settings in case of VNDetectRectanglesRequest
+//        request.maximumObservations = 0
+//        request.minimumConfidence = 0.5
+//        request.minimumAspectRatio = 0.4
+        
+        // - request settings in case of VNDetectedObjectObservation
+//        request.reportCharacterBoxes = true
         
         return request
     }
