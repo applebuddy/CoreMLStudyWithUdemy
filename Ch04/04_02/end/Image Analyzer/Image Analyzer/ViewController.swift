@@ -7,11 +7,11 @@
 //
 
 // MARK: - Analyzing Still Images using Vision
-// - Vision으로부터 무언가를 감지하게 하고 싶다면,
-// 1. VisionRequest를 호출합니다.
-// 2. VisionRequest 결과를 처리하기 위한 Request Handler를 처리합니다.
-// 3. Request Type에 따라서 VisionRequest의 감지 결과값을 Observation 배열로 받을 수 있습니다.
-// -> 감지할 수 있는 Observation Type은 바코드, 텍스트, 이미지, 모양 등 다양한 Type이 있습니다. 
+//- Vision으로부터 무언가를 감지하게 하고 싶다면,
+//1. VisionRequest를 호출합니다.
+//2. VisionRequest 결과를 처리하기 위한 Request Handler를 처리합니다.
+//3. Request Type에 따라서 VisionRequest의 감지 결과값을 Observation 배열로 받을 수 있습니다.
+//-> 감지할 수 있는 Observation Type은 바코드, 텍스트, 이미지, 모양 등 다양한 Type이 있습니다.
 import UIKit
 
 class ViewController: UIViewController {

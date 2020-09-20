@@ -9,6 +9,7 @@
 import UIKit
 
 extension UIImage {
+    /// - 감지할 이미지의 위치를 보정하기 위해 사용한다.
     var cgOrientation: CGImagePropertyOrientation {
         switch imageOrientation {
         case .up: return .up

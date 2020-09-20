@@ -60,7 +60,10 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
             fatalError("Error! Could not retrieve image from image picker.")
         }
         
+        // - 이미지피커뷰로 선택 한 이미지를 이미지뷰에 설정합니다.
         imageView.image = uiImage
+        
+        // - 이미지뷰 이미지에 대한 VisionRequest를 수행합니다.
         performVisionRequest(image: uiImage)
     }
 }
