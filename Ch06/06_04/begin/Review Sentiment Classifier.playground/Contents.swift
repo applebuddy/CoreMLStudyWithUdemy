@@ -40,6 +40,8 @@ do {
     
     let validationAccuracy = (1.0 - sentimentClassifier.validationMetrics.classificationError) * 100
     let evaluationAccuracy = (1.0 - evaluationMetrics.classificationError) * 100
+    
+    // Training accuracy, Validation accuracy가 높을 수록, 주어진 입력값에 대해 도출되는 판별결과 신뢰도가 증가한다.
     let message = """
     ==========================================
     Training accuracy: \(trainingAccuracy)
@@ -48,6 +50,12 @@ do {
     
     """
     print(message)
+    
+    // Saving the CoreML Model
+    // - 자신(applebuddy)의 바탕화면에 해당 mlmodel파일(ReviewClassifier.mlmodel)이 저장된다.
+    let modelFileURL = URL(fileURLWithPath: "/Users/applebuddy/Desktop/ReviewClassifier.mlmodel")
+    let metaData = MLModelMetadata(author: "MungGu", shortDescription: "A Model trained to classify product review sentiment", version: "1.0")
+    try sentimentClassifier.write(to: modelFileURL, metadata: metaData)
 } catch {
     print(error.localizedDescription)
 }
