@@ -26,13 +26,28 @@ do {
     let testingDataTable = try MLDataTable(contentsOf: testingDataFileURL)
     
     let stats = """
-    
     ==========================================
     Entries used for training: \(trainingDataTable.size)
     Entries used for testing: \(testingDataTable.size)
     
     """
-    print(stats)    
+    print(stats)
+    
+    /// 의견 판별자 인스턴스 생성
+    let sentimentClassifier = try MLTextClassifier(trainingData: trainingDataTable, textColumn: "text", labelColumn: "label")
+    let evaluationMetrics = sentimentClassifier.evaluation(on: testingDataTable, textColumn: "text", labelColumn: "label")
+    let trainingAccuracy = (1.0 - sentimentClassifier.trainingMetrics.classificationError) * 100
+    
+    let validationAccuracy = (1.0 - sentimentClassifier.validationMetrics.classificationError) * 100
+    let evaluationAccuracy = (1.0 - evaluationMetrics.classificationError) * 100
+    let message = """
+    ==========================================
+    Training accuracy: \(trainingAccuracy)
+    Validation accuracy: \(validationAccuracy)
+    Evaluation accuracy: \(evaluationAccuracy)
+    
+    """
+    print(message)
 } catch {
     print(error.localizedDescription)
 }
